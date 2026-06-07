@@ -1,0 +1,19 @@
+backend:
+  name: git-gateway
+  branch: master # Or 'master' if that is your default branch
+
+media_folder: public/assets/images # Where images uploaded from your phone will go
+public_folder: /assets/images
+
+collections:
+  - name: "articles"
+    label: "Article"
+    folder: "src/content/articles" # This must match where your .md files are
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Category", name: "category", widget: "select", options: ["SPACE NEWS", "ASTROPHOTOGRAPHY", "ASTRONOMY", "FUTURE SPACE", "EQUIPMENT", "NIGHT SKY"]}
+      - {label: "Featured Image", name: "image", widget: "string"}
+      - {label: "Body", name: "body", widget: "markdown"}
