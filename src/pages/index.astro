@@ -37,7 +37,7 @@ const navLinks = [
 <body class="font-sans antialiased">
     
     <!-- Navigation Bar -->
-    <nav class="border-b border-[#3F3F46] px-12 py-5 flex items-center justify-between sticky top-0 bg-[#0F1014]/90 backdrop-blur-md z-50">
+    <nav class="border-b border-[#3F3F46] px-6 md:px-12 py-5 flex items-center justify-between sticky top-0 bg-[#0F1014]/90 backdrop-blur-md z-50">
         <div class="flex items-center gap-3">
             <img src="https://img.icons8.com/?size=100&id=t74n3O7o4421&format=png&color=7C3AED" alt="Logo" class="w-7 h-7" />
             <span class="text-white text-xl font-bold tracking-tight">AETHER</span>
@@ -64,13 +64,26 @@ const navLinks = [
             <div class="relative z-10 text-center px-6">
                 <h1 class="text-7xl font-extrabold text-white tracking-tighter leading-tight drop-shadow-lg">Explore. Learn. Look Up.</h1>
                 <p class="text-2xl text-gray-200 mt-6 max-w-2xl mx-auto font-medium drop-shadow-md">Your guide to space, astronomy and the future beyond Earth.</p>
-                <div class="mt-12">
-                    <button class="px-10 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-full hover:bg-white/20 transition-all shadow-xl">
-                        Explore Articles
-                    </button>
-                </div>
             </div>
         </section>
+<style>
+  @media (max-width: 768px) {
+    /* Stack the nav container items on small screens */
+    nav {
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem;
+    }
+    
+    /* Make links wrap instead of forcing a wide row */
+    nav > div:last-child {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+  }
+</style>
+    
 
         <!-- Featured Story -->
         {featured && (
