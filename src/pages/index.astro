@@ -1,0 +1,124 @@
+---
+import { getCollection } from 'astro:content';
+
+const allArticles = await getCollection('articles');
+const sorted = allArticles.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const featured = sorted[0];
+const getPosts = (cat: string) => sorted.filter(a => a.data.category === cat);
+
+const categories = [
+    { name: "SPACE NEWS", data: getPosts("SPACE NEWS") },
+    { name: "ASTROPHOTOGRAPHY", data: getPosts("ASTROPHOTOGRAPHY") },
+    { name: "ASTRONOMY", data: getPosts("ASTRONOMY") },
+    { name: "FUTURE SPACE", data: getPosts("FUTURE SPACE") },
+    { name: "EQUIPMENT", data: getPosts("EQUIPMENT") },
+    { name: "NIGHT SKY", data: getPosts("NIGHT SKY") },
+];
+
+const navLinks = [
+    { label: "Home", href: "/" },
+    { label: "Space News", href: "#space-news" },
+    { label: "Astrophotography", href: "#astrophotography" },
+    { label: "Astronomy", href: "#astronomy" },
+    { label: "Future Space", href: "#future-space" },
+    { label: "Equipment", href: "#equipment" },
+    { label: "Night Sky", href: "#night-sky" },
+];
+---
+
+<html lang="en" class="bg-[#0F1014] text-[#A1A1AA]">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AETHER | Explore. Learn. Look Up.</title>
+</head>
+<body class="font-sans antialiased">
+    
+    <!-- Navigation Bar -->
+    <nav class="border-b border-[#3F3F46] px-12 py-5 flex items-center justify-between sticky top-0 bg-[#0F1014]/90 backdrop-blur-md z-50">
+        <div class="flex items-center gap-3">
+            <img src="https://img.icons8.com/?size=100&id=t74n3O7o4421&format=png&color=7C3AED" alt="Logo" class="w-7 h-7" />
+            <span class="text-white text-xl font-bold tracking-tight">AETHER</span>
+        </div>
+        <div class="flex items-center gap-8">
+            {navLinks.map(link => (
+                <a href={link.href} class="text-sm text-[#A1A1AA] hover:text-white transition-colors">{link.label}</a>
+            ))}
+        </div>
+    </nav>
+
+    <main class="max-w-[1440px] mx-auto px-12 py-16">
+        
+        <!-- High-Impact Hero Section -->
+        <section class="relative w-full h-[600px] mb-24 overflow-hidden rounded-none md:rounded-3xl flex items-center justify-center">
+            <img 
+                src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2400&auto=format&fit=crop" 
+                alt="Earth and Space" 
+                class="absolute inset-0 w-full h-full object-cover scale-105" 
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0F1014] via-[#0F1014]/40 to-transparent"></div>
+            <div class="absolute inset-0 bg-[#0F1014]/20"></div>
+
+            <div class="relative z-10 text-center px-6">
+                <h1 class="text-7xl font-extrabold text-white tracking-tighter leading-tight drop-shadow-lg">Explore. Learn. Look Up.</h1>
+                <p class="text-2xl text-gray-200 mt-6 max-w-2xl mx-auto font-medium drop-shadow-md">Your guide to space, astronomy and the future beyond Earth.</p>
+                <div class="mt-12">
+                    <button class="px-10 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-full hover:bg-white/20 transition-all shadow-xl">
+                        Explore Articles
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Story -->
+        {featured && (
+            <section class="mb-24">
+                <h2 class="text-3xl font-bold text-white mb-8 border-b border-[#3F3F46] pb-4">Featured Story</h2>
+                <div class="bg-[#18181B] border border-[#3F3F46] rounded-2xl p-10 hover:border-purple-600 transition-all">
+                    <span class="text-purple-400 font-semibold uppercase tracking-wider text-sm">{featured.data.category}</span>
+                    <h3 class="text-5xl font-extrabold text-white mt-4 tracking-tight">{featured.data.title}</h3>
+                    <a href={`/articles/${featured.id.replace('.md', '')}`} class="inline-block text-white font-semibold mt-10 px-8 py-3 bg-[#7C3AED] rounded-lg hover:bg-purple-700 transition-colors">Read Full Story →</a>
+                </div>
+            </section>
+        )}
+
+        <!-- Dynamic Category Loops -->
+        {categories.map(cat => (
+            <section id={cat.name.toLowerCase().replace(' ', '-')} class="mb-20 scroll-mt-24">
+                <div class="flex items-center justify-between mb-8 border-b border-[#3F3F46] pb-4">
+                    <h2 class="text-3xl font-bold text-white">{cat.name}</h2>
+                    <a href={`/categories/${cat.name.toLowerCase().replace(' ', '-')}`} class="text-purple-400 text-sm hover:text-purple-300">View all →</a>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {cat.data.length > 0 ? cat.data.map(post => (
+                        <a href={`/articles/${post.id.replace('.md', '')}`} class="bg-[#18181B] border border-[#3F3F46] rounded-xl overflow-hidden hover:border-purple-600 transition-all">
+                            <div class="h-48 w-full bg-[#0F1014]">
+                                {post.data.image ? (
+                                    <img src={post.data.image} alt={post.data.title} class="w-full h-full object-cover" />
+                                ) : (
+                                    <div class="w-full h-full flex items-center justify-center text-[#3F3F46]">No Image</div>
+                                )}
+                            </div>
+                            <div class="p-6">
+                                <h4 class="text-xl font-bold text-white">{post.data.title}</h4>
+                                <p class="text-sm mt-4 text-[#A1A1AA]">{post.data.date.toDateString()}</p>
+                            </div>
+                        </a>
+                    )) : (
+                        <div class="col-span-4 p-8 border border-dashed border-[#3F3F46] rounded-xl text-center">
+                            <p class="text-[#A1A1AA]">No articles currently in this category.</p>
+                        </div>
+                    )}
+                </div>
+            </section>
+        ))}
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-[#3F3F46] bg-[#0F1014] mt-24 px-12 py-10 flex items-center justify-between text-xs">
+        <span class="text-[#A1A1AA]">AETHER. Exploring space. Inspiring curiosity.</span>
+    </footer>
+</body>
+</html>

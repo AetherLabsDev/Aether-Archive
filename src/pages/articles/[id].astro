@@ -1,0 +1,106 @@
+---
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map(post => ({
+    params: { id: post.id.replace('.md', '') },
+    props: { post, allArticles: articles },
+  }));
+}
+
+const { post, allArticles } = Astro.props;
+const { Content } = await render(post);
+
+const relatedArticles = allArticles
+    .filter(a => a.id !== post.id)
+    .slice(0, 4);
+
+const navLinks = [
+    { label: "Home", href: "/" },
+    { label: "Space News", href: "#" },
+    { label: "Astrophotography", href: "#" },
+    { label: "Astronomy", href: "#" },
+    { label: "Future Space", href: "#" },
+    { label: "Equipment", href: "#" },
+    { label: "Night Sky", href: "#" },
+];
+---
+
+<html lang="en" class="bg-[#0F1014] text-[#A1A1AA]">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{post.data.title} | AETHER</title>
+</head>
+<body class="font-sans antialiased selection:bg-purple-500/30">
+    
+    <nav class="border-b border-[#3F3F46] px-12 py-5 flex items-center justify-between sticky top-0 bg-[#0F1014]/90 backdrop-blur-md z-50">
+        <a href="/" class="flex items-center gap-3">
+            <img src="https://img.icons8.com/?size=100&id=t74n3O7o4421&format=png&color=7C3AED" alt="Logo" class="w-7 h-7" />
+            <span class="text-white text-xl font-bold tracking-tight">AETHER</span>
+        </a>
+        <div class="flex items-center gap-8">
+            {navLinks.map(link => (
+                <a href={link.href} class="text-sm text-[#A1A1AA] hover:text-white transition-colors">{link.label}</a>
+            ))}
+        </div>
+    </nav>
+
+    <main class="max-w-[1440px] mx-auto px-12 py-10">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16">
+            
+            <article>
+                <header class="mb-10">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-purple-400 bg-purple-500/10 px-3 py-1.5 rounded-full">{post.data.category || 'Article'}</span>
+                    <h1 class="text-5xl font-extrabold text-white mt-6 mb-8 tracking-tight leading-[1.1]">{post.data.title}</h1>
+                </header>
+
+                <div class="w-full h-[450px] mb-12 bg-[#18181B] rounded-2xl overflow-hidden border border-[#3F3F46]">
+                    {post.data.image ? (
+                        <img src={post.data.image} alt={post.data.title} class="w-full h-full object-cover" />
+                    ) : (
+                        <div class="w-full h-full flex items-center justify-center text-[#3F3F46]">No Image Provided</div>
+                    )}
+                </div>
+
+                <div class="text-lg leading-relaxed text-[#A1A1AA] 
+                            [&>p]:mb-6 
+                            [&>h2]:text-3xl [&>h2]:font-bold [&>h2]:text-white [&>h2]:mt-12 [&>h2]:mb-6
+                            [&>strong]:text-white">
+                    <Content />
+                </div>
+            </article>
+
+            <aside class="space-y-8">
+                <div class="bg-[#18181B] border border-[#3F3F46] rounded-2xl p-8">
+                    <h3 class="text-white font-bold mb-6">Related Articles</h3>
+                    <div class="space-y-6">
+                        {relatedArticles.map(article => (
+                            <a href={`/articles/${article.id.replace('.md', '')}`} class="flex gap-4 group">
+                                <div class="w-16 h-16 rounded-lg bg-[#0F1014] border border-[#3F3F46] flex items-center justify-center overflow-hidden">
+                                    {article.data.image ? (
+                                        <img src={article.data.image} alt="" class="w-full h-full object-cover" />
+                                    ) : (
+                                        <span class="text-[8px] text-gray-500">IMG</span>
+                                    )}
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-semibold text-white leading-snug group-hover:text-purple-300 transition-colors line-clamp-2">{article.data.title}</h4>
+                                    <p class="text-xs text-[#A1A1AA] mt-2">{article.data.date.toDateString()}</p>
+                                </div>
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            </aside>
+            
+        </div>
+    </main>
+
+    <footer class="border-t border-[#3F3F46] bg-[#0F1014] mt-24 px-12 py-10 text-xs text-[#A1A1AA]">
+        AETHER. Exploring space. Inspiring curiosity.
+    </footer>
+</body>
+</html>
