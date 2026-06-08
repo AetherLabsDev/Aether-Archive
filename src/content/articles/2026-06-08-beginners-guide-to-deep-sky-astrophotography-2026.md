@@ -2,7 +2,8 @@
 title: Beginner's Guide to Deep Sky Astrophotography (2026)
 date: 2026-06-08T13:47:00.000+01:00
 category: ASTROPHOTOGRAPHY
-image: https://postimg.cc/TKhVtxvL
+image: "[![37767538.jpg](https://i.postimg.cc/FHVTsFPZ/37767538.jpg)](https://p\
+  ostimg.cc/TKhVtxvL)"
 ---
 
 
