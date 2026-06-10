@@ -2,7 +2,7 @@
 title: "How to Polar Align a Star Tracker: A Beginner's Guide"
 date: 2026-06-09T09:27:00.000+01:00
 category: ASTROPHOTOGRAPHY
-image: https://www.google.com/search?client=ms-android-samsung-rvo1&hs=67h&sca_esv=8df6689b8d0e1c8b&udm=2&fbs=ADc_l-YQanUcJSoe62luYRIM6gsUt2zjmW_MvZe6pHkYHWOdy8woxLkmF_YUe3IvdgohA_8v3TsiD84hBql4N0xjnXxRdFJffB59N9mGWQjiIBzYQfii8WulKaZxa6tlQbGPh-IDxJ3uH_KIGzMc6gu0VkOaqqw3rlchQfXzUyxq8LvLh057cFKJdz7O9reitZh-pxALJC3zfWTr_ZlmZAsAma2iMmj_0AfL01p5lDq2i7s3RjttAjk&q=startracker&sa=X&ved=2ahUKEwifvMT83fmUAxVaVkEAHV7mA4sQtKgLegQIFBAB&biw=384&bih=691&dpr=3.75#sv=CAMSPhoyKhBlLXpWMXUzRWhIbXpGeDlNMg56VjF1M0VoSG16Rng5TToOZlhrZ1VSczhkeEl3Qk0gBDgASgQIARACGAcg_vTtiw1KCBACGAEgAigB
+image: https://i.postimg.cc/P5k2dzxN/pexels-chudin-alexey-13065087.jpg
 ---
 One of the most important skills in astrophotography is polar alignment. If your star tracker isn't properly aligned with Earth's axis of rotation, stars will drift during long exposures, resulting in blurry images and ruined data.
 
